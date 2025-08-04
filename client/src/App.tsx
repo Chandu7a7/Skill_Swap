@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion'; // ✅ Required for animation
 import { Settings, User } from 'lucide-react';
+
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { DataProvider, useData } from './context/DataContext';
+
 import Header from './components/Layout/Header';
 import UserCard from './components/UserCard';
 import Pagination from './components/Pagination';
@@ -11,7 +14,7 @@ import AuthModal from './components/Auth/AuthModal';
 const USERS_PER_PAGE = 6;
 
 function AppContent() {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { searchUsers } = useData();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,39 +58,52 @@ function AppContent() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header onSearch={setSearchQuery} searchQuery={searchQuery} />
-      
+
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Swap Skills, Grow Together
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-indigo-100">
-              Connect with others to exchange knowledge and learn new skills
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {isAuthenticated ? (
-                <button
-                  onClick={handleDashboardClick}
-                  className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center space-x-2"
-                >
-                  <Settings className="h-5 w-5" />
-                  <span>My Dashboard</span>
-                </button>
-              ) : (
-                <button
-                  onClick={() => setShowAuthModal(true)}
-                  className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center space-x-2"
-                >
-                  <User className="h-5 w-5" />
-                  <span>Join SkillSwap</span>
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
+<div className="bg-indigo-600 text-white py-20 px-4 md:px-8">
+  <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+    
+    {/* Left Content */}
+    <div className="text-center md:text-left md:w-1/2 space-y-6">
+      <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
+        Swap Skills, <span className="text-yellow-300">Grow Together</span>
+      </h1>
+      <p className="text-base md:text-lg text-indigo-100">
+        Connect with others to exchange knowledge and learn new skills.
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+        {isAuthenticated ? (
+          <button
+            onClick={handleDashboardClick}
+            className="bg-white text-indigo-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition-all"
+          >
+            My Dashboard
+          </button>
+        ) : (
+          <button
+            onClick={() => setShowAuthModal(true)}
+            className="bg-white text-indigo-600 px-6 py-2 rounded-md font-semibold hover:bg-gray-100 transition-all"
+          >
+            Join SkillSwap
+          </button>
+        )}
       </div>
+    </div>
+
+    {/* Right Animated Image */}
+    <div className="md:w-1/2 flex justify-center">
+      <motion.img
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        whileHover={{ scale: 1.05, rotate: 1 }}
+        src="./src/assids/Hero-logo.png"
+        alt="Skill Exchange"
+        className="w-60 md:w-80 rounded-xl shadow-xl border-4 border-white"
+      />
+    </div>
+  </div>
+</div>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -121,13 +137,13 @@ function AppContent() {
           </p>
         </div>
 
-        {/* User Grid */}
+        {/* User Cards */}
         {displayedUsers.length === 0 ? (
           <div className="text-center py-12">
             <User className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">No users found</h3>
             <p className="text-gray-600">
-              {searchQuery 
+              {searchQuery
                 ? 'Try adjusting your search terms or browse all users.'
                 : 'Be the first to join our community!'}
             </p>
@@ -139,7 +155,6 @@ function AppContent() {
                 <UserCard key={user.id} user={user} />
               ))}
             </div>
-
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -149,6 +164,7 @@ function AppContent() {
         )}
       </div>
 
+      {/* Auth Modal */}
       {showAuthModal && (
         <AuthModal onClose={() => setShowAuthModal(false)} />
       )}

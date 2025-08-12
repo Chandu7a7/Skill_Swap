@@ -73,12 +73,15 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchQuery }) => {
                   </button>
                 </>
               ) : (
-                <button
-                  onClick={handleAuthAction}
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm hover:bg-indigo-700 transition"
-                >
-                  Login / Sign Up
-                </button>
+              <button
+  onClick={handleAuthAction}
+  className="bg-gray-100 text-indigo-600 px-4 py-2 rounded-md text-sm font-medium 
+             hover:bg-indigo-600 hover:text-white transition-colors duration-200"
+>
+  Login / Sign Up
+</button>
+
+
               )}
             </div>
 

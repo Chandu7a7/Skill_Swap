@@ -13,7 +13,10 @@
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
+    "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.5.2",
+    "react-responsive-3d-carousel": "^2.1.5",
     "recharts": "^3.1.0",
     "swiper": "^11.2.10"
   },

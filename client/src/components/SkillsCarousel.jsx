@@ -1,43 +1,67 @@
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+import {
+  Code2,
+  PenTool,
+  Paintbrush,
+  Video,
+  FileText,
+  BarChart4,
+  Camera,
+  Database,
+  Search,
+  Mic2,
+  Cloud,
+} from "lucide-react";
 
-const SkillsCarousel = () => {
-  const skills = [
-    { name: "Web Development", icon: "/skills/web.png" },
-    { name: "UI/UX Design", icon: "/skills/uiux.png" },
-    { name: "Graphic Design", icon: "/skills/design.png" },
-    { name: "Video Editing", icon: "/skills/video.png" },
-    { name: "Content Writing", icon: "/skills/writing.png" },
-    { name: "Digital Marketing", icon: "/skills/marketing.png" },
-    { name: "Photography", icon: "/skills/photo.png" },
-    { name: "Data Science", icon: "/skills/data.png" },
-    { name: "SEO", icon: "/skills/seo.png" },
-    { name: "Public Speaking", icon: "/skills/speak.png" },
-    { name: "Cloud Computing", icon: "/skills/cloud.png" },
-  ];
+// Skills array with icons
+const skills = [
+  { name: "Web Development", icon: <Code2 size={40} /> },
+  { name: "UI/UX Design", icon: <PenTool size={40} /> },
+  { name: "Graphic Design", icon: <Paintbrush size={40} /> },
+  { name: "Video Editing", icon: <Video size={40} /> },
+  { name: "Content Writing", icon: <FileText size={40} /> },
+  { name: "Marketing", icon: <BarChart4 size={40} /> },
+  { name: "Photography", icon: <Camera size={40} /> },
+  { name: "Data Science", icon: <Database size={40} /> },
+  { name: "SEO", icon: <Search size={40} /> },
+  { name: "Public Speaking", icon: <Mic2 size={40} /> },
+  { name: "Cloud Computing", icon: <Cloud size={40} /> },
+];
 
-  const loopSkills = [...skills, ...skills]; // Duplicate for seamless loop
-
+export default function App() {
   return (
-    <div className="w-full bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 py-10 overflow-hidden">
-      <h2 className="text-3xl text-center text-white font-bold mb-8">Explore Skills</h2>
-      <div className="relative w-full overflow-hidden">
-        <div
-          className="flex gap-10 animate-slide whitespace-nowrap"
-          style={{ animationDuration: "25s", animationIterationCount: "infinite" }}
-        >
-          {loopSkills.map((skill, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0 bg-white/20 backdrop-blur-md rounded-xl p-4 shadow-md flex flex-col items-center text-white w-48 hover:scale-105 transition-transform duration-300"
-            >
-              <img src={skill.icon} alt={skill.name} className="w-16 h-16 mb-3" />
-              <p className="text-md font-medium">{skill.name}</p>
+    <div className="bg-gradient-to-br from-white via-gray-50 to-gray-100 text-gray-900 py-16 px-4 flex flex-col items-center justify-center">
+      {/* Section Heading */}
+      <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-indigo-600 drop-shadow-sm">
+        Explore Trending Skills
+      </h2>
+
+      {/* Skill Carousel */}
+      <Swiper
+        modules={[Autoplay]}
+        spaceBetween={30}
+        slidesPerView={3}
+        loop={true}
+        autoplay={{ delay: 2000 }}
+        breakpoints={{
+          640: { slidesPerView: 2 },
+          768: { slidesPerView: 3 },
+          1024: { slidesPerView: 5 },
+        }}
+        className="w-full max-w-6xl"
+      >
+        {skills.map((skill, index) => (
+          <SwiperSlide key={index}>
+            <div className="bg-white border border-indigo-100 hover:border-indigo-600 text-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-lg hover:shadow-indigo-200 transform hover:scale-105 transition-all duration-500 ease-in-out">
+              <div className="mb-4 text-indigo-600">{skill.icon}</div>
+              <p className="text-lg font-semibold">{skill.name}</p>
             </div>
-          ))}
-        </div>
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
-};
-
-export default SkillsCarousel;
+}

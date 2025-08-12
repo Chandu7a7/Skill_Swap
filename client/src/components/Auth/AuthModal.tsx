@@ -10,14 +10,17 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    location: '',
-    skillsOffered: '',
-    skillsWanted: '',
-    availability: '',
-  });
+  name: '',
+  email: '',
+  password: '',
+  location: '',
+  skillsOffered: '',
+  skillsWanted: '',
+  availability: '',
+  github: '',
+  linkedin: '',
+});
+
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState('');
@@ -176,6 +179,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose }) => {
                 </button>
               </div>
             </div>
+            
             {!isLogin && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -274,8 +278,37 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose }) => {
                     placeholder="e.g., Weekends, Evenings, Mornings"
                   />
                 </div>
+              <div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    GitHub Profile (Optional)
+  </label>
+  <input
+    type="url"
+    name="github"
+    value={formData.github}
+    onChange={handleInputChange}
+    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+    placeholder="https://github.com/username"
+  />
+</div>
+
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    LinkedIn Profile (Optional)
+  </label>
+  <input
+    type="url"
+    name="linkedin"
+    value={formData.linkedin}
+    onChange={handleInputChange}
+    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+    placeholder="https://linkedin.com/in/username"
+  />
+</div>
+
               </>
             )}
+
 
             {error && (
               <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
